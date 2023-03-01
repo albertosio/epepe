@@ -1,0 +1,49 @@
+Struttura istruzione: Nome-mnemonico [operando-esadecimale]
+
+Le istruzioni:
+LDA : carica nel registro accumulatore il contenuto della cella di RAM indirizzata dall'operando
+	->  opcode: 0000
+ADD : somma il contenuto dell'accumulatore e della cella indirizzata dall'operando e mette il risultato nell'accumulatore
+	->  opcode: 0001
+SUB : sottrae dall'accumulatore il contenuto della cella indirizzata dall'operando e mette il risultato nell'accumulatore
+	->  opcode: 0010
+OUT : copia il valore dell'accumulatore nel registro di output
+	->  opcode: 1110
+HLT : termina l'esecuzione fermando il clock
+	 ->  opcode: 1111
+
+
+I segnali di controllo con il loro rispettivo valore di attivazione
+          Cp  Ep  Lm_ CE_ Li_ Ei_ La_ Ea  Su  Eu  Lb_ Lo_
+          1   1   0   0   0   0   0   1   1   1   0   0   
+
+Le parole di controllo relative a ogni combinazione opcode-contatore circolare
+Fetch
+  000001  0   1   0   1   1   1   1   0   0   0   1   1   ||   Ep  Lm_   
+  000010  1   0   1   1   1   1   1   0   0   0   1   1   ||   Cp
+  000100  0   0   1   0   0   1   1   0   0   0   1   1   ||   Ce_  Li_
+
+opcode 0000
+  001000  0   0   0   1   1   0   1   0   0   0   1   1   ||   Lm_  Ei_
+  010000  0   0   1   0   1   1   0   0   0   0   1   1   ||   CE_  La_
+  100000  0   0   1   1   1   1   1   0   0   0   1   1   ||
+  
+opcode 0001
+  001000  0   0   0   1   1   0   1   0   0   0   1   1   ||   Lm_   Ei_ 
+  010000  0   0   1   0   1   1   1   0   0   0   0   1   ||   Ce_   Lb_
+  100000  0   0   1   1   1   1   0   0   0   1   1   1   ||   La_   Eu
+  
+opcode 0010
+  001000  0   0   0   1   1   0   1   0   0   0   1   1   ||   Lm_   Ei_ 
+  010000  0   0   1   0   1   1   1   0   0   0   0   1   ||   Ce_   Lb_
+  100000  0   0   1   1   1   1   0   0   1   1   1   1   ||   La_   Eu    Su
+  
+opcode 1110
+  001000  0   0   1   1   1   1   1   1   0   0   1   0   ||   Ea    Lo_
+  010000  0   0   1   1   1   1   1   0   0   0   1   1   ||
+  100000  0   0   1   1   1   1   1   0   0   0   1   1   ||
+  
+opcode 1111 
+  001000  0   0   1   1   1   1   1   0   0   0   1   1   ||
+  010000  0   0   1   1   1   1   1   0   0   0   1   1   ||
+  100000  0   0   1   1   1   1   1   0   0   0   1   1   ||
